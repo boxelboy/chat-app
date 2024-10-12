@@ -1,2 +1,2 @@
 # chat-app
-Exprimentating with nodejs and sockets
+Experimenting with nodejs and sockets
