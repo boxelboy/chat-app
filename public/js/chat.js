@@ -88,16 +88,22 @@ socket.on('roomData', ({room, users}) => {
 
 $locationSendButton.addEventListener('click', (e) => {
     $locationSendButton.setAttribute('disabled', true)
+    if (!navigator.geolocation) {
+        return alert('Geolocation is not supported');
+    }
 
-        socket.emit('sendLocation', {
+    navigator.geolocation.getCurrentPosition((position) => {
+        socket.emit('sendLocation', {"lat":position.coords.latitude, "long":position.coords.longitude},
+        /*socket.emit('sendLocation', {
             lat:25.4,
             long:-7
-        }, (ack) => {
+        },*/ (ack) => {
             if (ack) {
                 $locationSendButton.removeAttribute('disabled')
                 return console.log('location shared!!')
             }
         })
+    })
 })
 
 socket.emit('join', {username, room}, (error) => {
